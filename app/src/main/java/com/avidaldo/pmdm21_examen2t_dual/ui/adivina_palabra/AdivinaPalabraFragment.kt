@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import com.avidaldo.pmdm21_examen2t_dual.R
 import com.avidaldo.pmdm21_examen2t_dual.databinding.FragmentAdivinaPalabraBinding
 import com.google.android.material.snackbar.Snackbar
@@ -17,9 +17,14 @@ class AdivinaPalabraFragment : Fragment() {
     private var _binding: FragmentAdivinaPalabraBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: AdivinaPalabraViewModel by viewModels() {
+
+    private val viewModel: AdivinaPalabraViewModel
+            by navGraphViewModels(R.id.nav_graph_avivina) {
+                AdivinaPalabraViewModelFactory(resources.getStringArray(R.array.palabras).toMutableList())
+            }
+/*    private val viewModel: AdivinaPalabraViewModel by viewModels() {
         AdivinaPalabraViewModelFactory(resources.getStringArray(R.array.palabras).toMutableList())
-    }
+    }*/
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentAdivinaPalabraBinding.inflate(inflater, container, false)
@@ -33,8 +38,6 @@ class AdivinaPalabraFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        reset()
 
         binding.correctButton.setOnClickListener { viewModel.onCorrect() }
         binding.skipButton.setOnClickListener { viewModel.onSkip() }
@@ -67,10 +70,8 @@ class AdivinaPalabraFragment : Fragment() {
 
 
     private fun onEndGame() {
-        Toast.makeText(activity, "Game has just finished", Toast.LENGTH_SHORT).show()
         viewModel.modelLiveData.value!!.score.let {
-            val action = AdivinaPalabraFragmentDirections.actionGameToScore(it)
-            NavHostFragment.findNavController(this).navigate(action)
+            findNavController().navigate(AdivinaPalabraFragmentDirections.actionGameToScore())
         }
     }
 

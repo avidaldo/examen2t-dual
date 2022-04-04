@@ -1,24 +1,21 @@
 package com.avidaldo.pmdm21_examen2t_dual.ui.tres_en_raya
 
+import android.util.Log
+
 
 class TresEnRayaModel() {
 
     enum class Jugador { X, O }
 
-    internal class Celda {
+    class Celda {
         var value: Jugador? = null
     }
 
-    private val celdas = Array(3) { arrayOfNulls<Celda>(3) }
+    val celdas = Array(3) { arrayOfNulls<Celda>(3) }
 
 
     var ganador: Jugador? = null
 
-    private enum class GameState {
-        JUGANDO, TERMINADO
-    }
-
-    private var estado: GameState? = null
 
     private var jugadorEnTurno: Jugador? = null
 
@@ -32,25 +29,26 @@ class TresEnRayaModel() {
         clearCells()
         ganador = null
         jugadorEnTurno = Jugador.X
-        estado = GameState.JUGANDO
     }
 
 
-    fun jugarTurno(row: Int, col: Int): Boolean {
-        if (estado == GameState.TERMINADO) return false // No se sigue marcando si el juego ha terminado
-        if (!marcar(row, col)) return false
+    fun jugarTurno(row: Int, col: Int) {
+        //if (estado == GameState.TERMINADO) return
+        ganador?.let{ return } //Si hay ganador no hacemos nada. Equivalente a linea anterior
+        if (!marcar(row, col)) return
         if (isMovimientoGana(row, col)) {
-            estado = GameState.TERMINADO
+            //estado = GameState.TERMINADO
             ganador = jugadorEnTurno
+            Log.d("---", "ganador: $ganador")
         } else {
             cambiarTurno() // Cambia el Jugador en turno
         }
-        return true
     }
 
     private fun marcar(row: Int, col: Int): Boolean {
         if (!isValida(row, col)) return false // Celda inválida (la vista ya no debería permitirlo)
         celdas[row][col]!!.value = jugadorEnTurno
+        Log.d("---", celdas[row][col]?.value.toString())
         return true
     }
 
