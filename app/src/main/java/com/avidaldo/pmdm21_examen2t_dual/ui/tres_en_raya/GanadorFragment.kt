@@ -5,18 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.navGraphViewModels
-import com.avidaldo.pmdm21_examen2t_dual.R
 import com.avidaldo.pmdm21_examen2t_dual.databinding.FragmentGanadorBinding
 
 class GanadorFragment : Fragment() {
     private var _binding: FragmentGanadorBinding? = null
     private val binding get() = _binding!!
-
-    private val viewModel: TresEnRayaViewModel
-            by navGraphViewModels(R.id.nav_graph_tres) {
-                defaultViewModelProviderFactory
-            }
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -34,20 +27,12 @@ class GanadorFragment : Fragment() {
 
     /*************************************************************************/
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.modelLiveData.observe(viewLifecycleOwner) {
-            binding.textSlideshow.text = it.ganador.toString()
+        GanadorFragmentArgs.fromBundle(requireArguments()).ganador?.let {
+            binding.textGanador.text = it
         }
-
     }
-
-    override fun onDestroy() {
-        viewModel.reset()
-        super.onDestroy()
-    }
-
 
 }

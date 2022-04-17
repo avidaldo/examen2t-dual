@@ -8,9 +8,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.GridLayout
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.navGraphViewModels
-import com.avidaldo.pmdm21_examen2t_dual.R
 import com.avidaldo.pmdm21_examen2t_dual.databinding.FragmentTresEnRayaBinding
 
 class TresEnRayaFragment : Fragment() {
@@ -35,10 +34,7 @@ class TresEnRayaFragment : Fragment() {
     /*************************************************************************/
 
 
-    private val viewModel: TresEnRayaViewModel
-            by navGraphViewModels(R.id.nav_graph_tres) {
-                defaultViewModelProviderFactory
-            }
+    private val viewModel: TresEnRayaViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -46,16 +42,12 @@ class TresEnRayaFragment : Fragment() {
         binding.buttonGrid.setOnClickListener(::onCellClicked)
         binding.buttonReset.setOnClickListener { viewModel.reset() }
 
-        viewModel.model.reiniciar()
-
-
         viewModel.modelLiveData.observe(viewLifecycleOwner) {
             binding.buttonGrid.setModel(it.tablero)
 
-            it.ganador?.let {
-                findNavController().navigate(
-                    TresEnRayaFragmentDirections.actionNavTresEnRayaToGanadorFragment()
-                )
+            it.ganador?.let{
+                viewModel.reset()
+                findNavController().navigate(TresEnRayaFragmentDirections.actionNavTresEnRayaToGanadorFragment(it.toString()))
             }
         }
     }

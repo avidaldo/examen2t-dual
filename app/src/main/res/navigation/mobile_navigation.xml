@@ -54,7 +54,13 @@
             android:id="@+id/ganadorFragment"
             android:name="com.avidaldo.pmdm21_examen2t_dual.ui.tres_en_raya.GanadorFragment"
             android:label="Ganador"
-            tools:layout="@layout/fragment_ganador">
+            tools:layout="@layout/fragment_ganador"
+            app:popUpTo="@id/nav_tres_en_raya" >
+            <argument
+                android:name="ganador"
+                app:argType="string"
+                app:nullable="true"
+                android:defaultValue="@null"/>
         </fragment>
     </navigation>
 

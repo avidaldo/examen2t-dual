@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 
 class TresEnRayaViewModel: ViewModel() {
 
-    var model = TresEnRayaModel()
+    private var model = TresEnRayaModel()
     var modelLiveData = MutableLiveData(model)
 
 
