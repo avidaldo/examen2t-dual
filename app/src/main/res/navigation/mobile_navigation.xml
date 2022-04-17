@@ -9,7 +9,7 @@
         android:id="@+id/nav_home"
         android:name="com.avidaldo.pmdm21_examen2t_dual.ui.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home"></fragment>
+        tools:layout="@layout/fragment_home" />
 
 
     <navigation
@@ -18,7 +18,8 @@
         <fragment
             android:id="@+id/nav_adivina_palabra"
             android:name="com.avidaldo.pmdm21_examen2t_dual.ui.adivina_palabra.AdivinaPalabraFragment"
-            android:label="@string/menu_adivina_palabra">
+            android:label="@string/menu_adivina_palabra"
+            tools:layout="@layout/fragment_adivina_palabra">
             <action
                 android:id="@+id/action_game_to_score"
                 app:destination="@id/scoreFragment"
@@ -32,7 +33,8 @@
         <fragment
             android:id="@+id/scoreFragment"
             android:name="com.avidaldo.pmdm21_examen2t_dual.ui.adivina_palabra.AdivinaPalabraPuntuacionFragment"
-            android:label="Puntuación">
+            android:label="Puntuación"
+            tools:layout="@layout/fragment_adivina_palabra_puntuacion">
         </fragment>
     </navigation>
 
@@ -51,7 +53,8 @@
         <fragment
             android:id="@+id/ganadorFragment"
             android:name="com.avidaldo.pmdm21_examen2t_dual.ui.tres_en_raya.GanadorFragment"
-            android:label="Ganador">
+            android:label="Ganador"
+            tools:layout="@layout/fragment_ganador">
         </fragment>
     </navigation>
 

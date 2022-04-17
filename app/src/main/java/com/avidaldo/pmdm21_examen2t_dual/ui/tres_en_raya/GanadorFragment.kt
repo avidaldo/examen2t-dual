@@ -19,9 +19,9 @@ class GanadorFragment : Fragment() {
             }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentGanadorBinding.inflate(inflater, container, false)
         return binding.root
@@ -32,23 +32,21 @@ class GanadorFragment : Fragment() {
         _binding = null
     }
 
+    /*************************************************************************/
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.modelLiveData.observe(viewLifecycleOwner) {
-            it.ganador?.let {
-                binding.tvGanador.visibility = View.VISIBLE
-                binding.textSlideshow.text = it.toString()
-            }
+            binding.textSlideshow.text = it.ganador.toString()
         }
 
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         viewModel.reset()
+        super.onDestroy()
     }
 
 
